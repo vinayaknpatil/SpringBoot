@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
+
+import main.java.com.vinayak.productservice.model.ProductModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
@@ -20,15 +23,21 @@ public class ProductResource {
 	@Autowired
 	private ProductPriceInfo prodPriceInfo;
 	
+	@Autowired
+	private ProductFetcher productFetcher;
+	
 	@RequestMapping("/{id}")
-	public String getProductData(@PathVariable("id") String productId)
+	public ProductModel getProductData(@PathVariable("id") String productId)
 	{
 		
 		String productName = prodNameInfo.getProductName(productId);
-		
 		Integer productPrice = prodPriceInfo.getProductPrice(productId);
 		
-		return productName + " --- "+ productPrice;
+		ProductModel model = productFetcher.getProductModel(productId);
+		model.setProductName(productName);
+		model.setPrice(productPrice);
+		
+		return model;
 		
 	}
 
