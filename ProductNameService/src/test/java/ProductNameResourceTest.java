@@ -1,34 +1,47 @@
-import static org.junit.Assert.assertEquals;
-
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import static org.junit.Assert.assertEquals;
 
+import com.vinayak.productnameservice.ProductNameFetcher;
 import com.vinayak.productnameservice.ProductNameResource;
 
-@WebAppConfiguration
-@ContextConfiguration(classes={ProductNameResource.class})
 @RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes={ProductNameResource.class})
+@WebAppConfiguration
 public class ProductNameResourceTest {
-
+	
+	@InjectMocks
+	ProductNameResource prodNameResource;
+	
 	@Mock
-	ProductNameResource prodNameResource = Mockito.mock(ProductNameResource.class);
+	ProductNameFetcher prodNameFetcher;
+	
+	@Before
+    public void initMocks(){
+        MockitoAnnotations.initMocks(this);
+    }
+	
 	@Test
 	public void whenProductIdIsAvailable()
 	{
-		
-		String productId = "123";
-		String name = "My product";
+		String productId = "133";
+		String name = "My prod";
 		
 		Mockito.when(prodNameResource.getName(productId)).thenReturn(name);
 		
-		String res = prodNameResource.getName(productId);
-		assertEquals(res, name);
-	
+		String actual = prodNameResource.getName(productId);
+		
+		assertEquals(name, actual);
 	}
+	
+	
 	
 }
