@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import main.java.com.vinayak.productservice.model.ProductModel;
 
@@ -31,7 +33,7 @@ public class ProductResource {
 	private ProductFetcher productFetcher;
 	
 	@RequestMapping("/{id}")
-	public ProductModel getProductData(@PathVariable("id") String productId)
+	public ResponseEntity<ProductModel> getProductData(@PathVariable("id") String productId)
 	{
 		
 		String productName = prodNameInfo.getProductName(productId);
@@ -40,12 +42,12 @@ public class ProductResource {
 		ProductModel model = productFetcher.getProductModel(productId);
 		if(model == null) // Return empty model
 		{
-			return new ProductModel();
+			return new ResponseEntity(new ProductModel(), HttpStatus.BAD_REQUEST);
 		}
 		model.setProductName(productName);
 		model.setPrice(productPrice);
 		
-		return model;
+		return new ResponseEntity(model,HttpStatus.OK);
 		
 	}
 
