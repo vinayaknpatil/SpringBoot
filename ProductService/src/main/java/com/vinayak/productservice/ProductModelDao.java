@@ -49,7 +49,9 @@ public class ProductModelDao {
 			
 		}
 		
-		return models.get(0);
+		if(models.size() > 0)
+			return models.get(0);
+		return null;
 	}
 
 }
