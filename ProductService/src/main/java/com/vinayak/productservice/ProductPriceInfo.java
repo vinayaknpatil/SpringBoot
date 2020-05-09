@@ -12,9 +12,9 @@ public class ProductPriceInfo {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	public Double getProductPrice(String productId)
+	public Integer getProductPrice(String productId)
 	{
-		return restTemplate.getForObject("http://ProductPriceService/productprice/"+productId,Double.class);
+		return restTemplate.getForObject("http://ProductPriceService/productprice/"+productId,Integer.class);
 		
 	}
 

@@ -26,7 +26,7 @@ public class ProductResource {
 		
 		String productName = prodNameInfo.getProductName(productId);
 		
-		Double productPrice = prodPriceInfo.getProductPrice(productId);
+		Integer productPrice = prodPriceInfo.getProductPrice(productId);
 		
 		return productName + " --- "+ productPrice;
 		
